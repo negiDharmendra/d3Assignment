@@ -4,6 +4,10 @@ const MARGIN = {TOP: 30, BOTTOM: 30, RIGHT: 30, LEFT: 30};
 const innerWidth = WIDTH - MARGIN.LEFT - MARGIN.RIGHT;
 const innerHeight = HEIGHT - MARGIN.TOP - MARGIN.BOTTOM;
 
+var data = _.times(30, function () {
+    return _.random(1, 100)
+});
+
 var xScale = d3.scaleLinear().rangeRound([0, innerWidth], .5).domain([0, 10]);
 var yScale = d3.scaleLinear().range([innerHeight, 0]).domain([0, 100]);
 
