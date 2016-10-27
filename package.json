@@ -1,0 +1,18 @@
+{
+  "name": "d3visualisation",
+  "version": "1.0.0",
+  "description": "",
+  "main": "d3.v4.js",
+  "dependencies": {
+    "jade": "^1.11.0",
+    "express": "^4.13.4",
+    "body-parser": "^1.15.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
