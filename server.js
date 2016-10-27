@@ -6,17 +6,13 @@ var app = express();
 
 app.set('view engine', 'jade');
 
-app.use(express.static('./public'));
+app.use(express.static('./views'));
 
-app.get('/',function(req,res){
-	res.render('index')
+app.get('/', function (req, res) {
+
+    res.render('randomNumLineChart')
 });
 
-
-app.get(/\/random\w+Chart/,function(req,res){
-	console.log(req.url);
-	res.render('randomNumBarChart')
+http.createServer(app).listen(3000, function () {
+    console.log("listening at port 3000")
 });
-
-
-http.createServer(app).listen(3000,function(){console.log("listening at port 3000")});
