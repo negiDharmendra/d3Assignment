@@ -6,4 +6,7 @@
 .bar{
     background: steelblue;
     margin: 2 0 2 0;
+    padding-right:10px;
+    text-align: right;
+    font-weight: 600;
 }
