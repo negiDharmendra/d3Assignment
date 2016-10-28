@@ -12,8 +12,8 @@ app.get('/', function (req, res) {
     res.render('randomNumLineChart')
 });
 
-app.get('/barChartWitDiv', function (req, res) {
-    res.render('barChartWitDiv')
+app.get('/barChartWithDiv', function (req, res) {
+    res.render('barChartWithDiv')
 });
 
 http.createServer(app).listen(3000, function () {
