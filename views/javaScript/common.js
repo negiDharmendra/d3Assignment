@@ -1,11 +1,11 @@
 const WIDTH = 1200;
-const HEIGHT = 600;
+const HEIGHT = 200;
 const MARGIN = {TOP: 30, BOTTOM: 30, RIGHT: 30, LEFT: 30};
-const innerWidth = WIDTH - MARGIN.LEFT - MARGIN.RIGHT;
-const innerHeight = HEIGHT - MARGIN.TOP - MARGIN.BOTTOM;
+const innerWidth = WIDTH - (MARGIN.LEFT + MARGIN.RIGHT);
+const innerHeight = HEIGHT - ( MARGIN.TOP + MARGIN.BOTTOM);
 const START = 0;
 const END = 100;
-const RANGE = 30;
+const RANGE = 80;
 
 var data = _.times(RANGE, function () {
     return _.random(START, END)
@@ -19,9 +19,9 @@ var svg = d3.select('.chart').append('svg')
     .attr('height', HEIGHT)
     .classed('svg', true);
 
+console.log("FOOOOOOOOO", WIDTH - (MARGIN.LEFT + MARGIN.RIGHT));
+
 var mainGroup = svg.append('g')
-    .attr('width', innerWidth)
-    .attr('height', innerHeight)
     .attr('transform', 'translate(' + MARGIN.LEFT + ',' + MARGIN.TOP + ')')
     .classed('mainGroup', true);
 
