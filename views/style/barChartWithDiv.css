@@ -1,7 +1,6 @@
 .mainContent{
     width: 100%;
     height: 100%;
-    text-align: center;
 }
 .bar{
     background: steelblue;
@@ -32,4 +31,13 @@
     display: inline-block;
     margin-right: 5px;
     border-radius: 10px;
+    text-align: center;
+}
+
+.sortButtons{
+    font-weight: 600;
+    margin-top:5%;
+}
+.sortButtons .text, .sortButtons .buttons {
+    display: inline-block;
 }
