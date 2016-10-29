@@ -5,8 +5,16 @@
 }
 .bar{
     background: steelblue;
-    margin: 2 0 2 0;
+    margin: 2px 0px 2px 0px;
     padding-right:10px;
     text-align: right;
     font-weight: 600;
+}
+
+.scoresBar {
+    border-radius: 10px;
+    margin: 5px 0 5px 0;
+    padding-right: 10px;
+    text-align: center;
+    color: white;
 }
