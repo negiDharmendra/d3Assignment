@@ -14,35 +14,10 @@ var data = [
 ];
 
 
-var scoreWiseData = d3.nest()
-    .key(function (d) {
-        return d.score;
-    }).sortKeys(d3.ascending)
-    .entries(data).map(function (d) {
-        return d.values[0]
-    });
-
-var namesWiseData = d3.nest()
-    .key(function (d) {
-        return d.name + d.subject;
-    }).sortKeys(d3.ascending)
-    .entries(data).map(function (d) {
-        return d.values[0]
-    });
-
-
-var subjectWiseData = d3.nest()
-    .key(function (d) {
-        return d.subject + d.name;
-    }).sortKeys(d3.ascending)
-    .entries(data).map(function (d) {
-        return d.values[0]
-    });
-
 var xScale = d3.scaleLinear().range([0, 600]).domain([1, 100]);
 
-var colorScale = d3.scaleOrdinal(['#1f77b4','#ff7f0e','#2ca02c','#d62728','#9a6cc3','#8c564b','#e377c2','#7f7f7f'])
-    .domain(['maths','english','kannada','science','social studies','bengali','tamil','sports']);
+var colorScale = d3.scaleOrdinal(d3.schemeCategory10)
+    .domain(['maths', 'english', 'kannada', 'science', 'social studies', 'bengali', 'tamil', 'sports']);
 
 
 var chart = d3.selectAll('.chart');
@@ -103,15 +78,9 @@ $(window).ready(function () {
 
 });
 
-$('#byName').click(function () {
-    d3.selectAll('.scoresBar').remove();
-    createBarChart(namesWiseData)
-});
-$('#byScore').click(function () {
-    d3.selectAll('.scoresBar').remove();
-    createBarChart(scoreWiseData)
-});
-$('#bySubject').click(function () {
-    d3.selectAll('.scoresBar').remove();
-    createBarChart(subjectWiseData)
+
+$('button').on('click', function (e) {
+    d3.selectAll('.scoresBar').sort(function (firstValue, secondValue) {
+        return d3.ascending(firstValue[e.target.id], secondValue[e.target.id])
+    });
 });
