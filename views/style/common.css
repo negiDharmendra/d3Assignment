@@ -1,22 +1,23 @@
-.mainContent{
+.mainContent {
     width: 100%;
     height: 100%;
     background: rgba(49, 49, 48, 0.89);
     text-align: center;
 }
-.svg{
-    margin:2%;
+
+.svg {
+    margin: 2%;
     background: lightyellow;
 }
 
-.tick line{
+.tick line {
     fill: none;
     stroke: rgba(12, 12, 12, 0.05);
     stroke-width: 1px;
 }
 
-.line-chart{
-    fill:none;
+.line-chart {
+    fill: none;
     stroke: steelblue;
     stroke-width: 1px;
 }

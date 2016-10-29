@@ -18,3 +18,18 @@
     text-align: center;
     color: white;
 }
+
+.legendsValue{
+    display: inline-block;
+    margin-top: 5%;
+}
+.legendsTitle{
+    display: inline-block;
+    font-weight: 600;
+    margin-right: 1%;
+}
+.subjectName{
+    display: inline-block;
+    margin-right: 5px;
+    border-radius: 10px;
+}
