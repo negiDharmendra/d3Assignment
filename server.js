@@ -16,6 +16,10 @@ app.get('/studentScores', function (req, res) {
     res.render('studentScores')
 });
 
+app.get('/numberTable', function (req, res) {
+    res.render('numberTable')
+});
+
 app.get(/barChartWithDiv\w*/, function (req, res) {
     res.render(req.url.match(/\w+/g)[0]);
 });
