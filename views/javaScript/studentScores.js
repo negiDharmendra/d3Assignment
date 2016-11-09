@@ -17,7 +17,9 @@ var data = [
 var xScale = d3.scaleLinear().range([0, 600]).domain([1, 100]);
 
 var colorScale = d3.scaleOrdinal(d3.schemeCategory10)
-    .domain(['maths', 'english', 'kannada', 'science', 'social studies', 'bengali', 'tamil', 'sports']);
+    .domain(d3.map(data, function (d) {
+        return d.subject
+    }));
 
 
 var chart = d3.selectAll('.chart');
