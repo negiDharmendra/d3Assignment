@@ -22,8 +22,8 @@ function displayNumber(numbers, rowNumber, scales, className) {
         .style('height', HEIGHT)
         .style('border', 2)
         .attr('class', className)
-        .text(function (d) {
-            return isNaN(scales(d)) ? d : scales(d);
+        .text(function (value) {
+            return isNaN(scales(value)) ? value : scales(value);
         });
 
 }
@@ -35,8 +35,7 @@ scales.forEach(function (value, index) {
 var newNumbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 var width = d3.scaleQuantize().range([70, 150]).domain([9, 10]);
-var fontSize = d3.scaleLinear().range([12, 120]).domain([0, 10]);
-var height = d3.scaleLinear().range([30, 180]).domain([0, 10]);
+var fontSize = d3.scaleLinear().range(["italic bold 12px/30px Georgia, serif", "italic bold 120px/180px Georgia, serif"]).domain([0, 10]);
 var numberCards = d3.selectAll('.numberCards').append('div').style('width', 1200).style('height', 200);
 
 numberCards.selectAll('div').data(newNumbers)
@@ -44,9 +43,7 @@ numberCards.selectAll('div').data(newNumbers)
     .append('div')
     .style('width', width)
     .attr('class', 'numberCard')
-    .text(function (d) {
-        return d
+    .text(function (number) {
+        return number
     })
-    .style('font', function (d) {
-        return "italic bold " + fontSize(d) + "px/" + height(d) + "px Georgia, serif";
-    });
+    .style('font', fontSize);
