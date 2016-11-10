@@ -4,7 +4,7 @@ var scales = {};
 
 scales.values = d3.scaleLinear();
 scales.valSquare = d3.scalePow().exponent(2);
-scales.valLog = d3.scaleLog();
+scales.valLog = d3.scaleLog().domain([Math.exp(0), Math.exp(10)]).range([0,10]);
 
 
 var numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
