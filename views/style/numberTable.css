@@ -3,9 +3,12 @@
     height: 100%;
 }
 
+svg{
+    margin-bottom: 40px;
+}
 rect {
     fill: none;
-    stroke-width: 1;
+    stroke-width: 1px;
     stroke: rgb(0, 0, 0);
 
 }
@@ -21,4 +24,18 @@ rect {
 
 .tBody:hover{
     fill: red;
+}
+
+.numberCard{
+    display: inline-block;
+    margin: 3px;
+    text-align: center;
+    vertical-align: top;
+    border: solid 1px black;
+
+}
+
+.childCard{
+    position: absolute;
+    top:0;
 }

@@ -14,7 +14,7 @@ var textPosition = d3.scaleLinear().range([25, 475]).domain([1, 10]);
 
 var title = ['Title', 'N', 'N Square', 'Log N', 'Round of log N'];
 
-var tableTitleChart = d3.selectAll('.tableChart').append('svg').style('width', 200).style('height', 600);
+var tableTitleChart = d3.selectAll('.tableChart').append('svg').style('width', 200).style('height', 250);
 
 tableTitleChart.selectAll('rect').data(title)
     .enter().append('rect')
@@ -36,13 +36,13 @@ tableTitleChart.selectAll('text').data(title).enter().append('text').attr('width
         return d;
     });
 
-var tableValuesChart = d3.selectAll('.tableChart').append('svg').style('width', 1400).style('height', 600);
+var tableValuesChart = d3.selectAll('.tableChart').append('svg').style('width', 1400).style('height', 250);
 function displayNumber(numbers, rowNumber, className, scales) {
     const HEIGHT = 50;
     const WIDTH = 140;
     var valuesGroup = tableValuesChart.append('g');
     var yScale = d3.scaleLinear().range([0, 200]).domain([0, 4]);
-    var xScale = d3.scaleLinear().range([0, 1260]).domain([1,10]);
+    var xScale = d3.scaleLinear().range([0, 1260]).domain([1, 10]);
     var yScaleText = d3.scaleLinear().range([25, 225]).domain([0, 4]);
     var xScaleText = d3.scaleLinear().range([10, 1270]).domain([1, 10]);
 
@@ -72,3 +72,23 @@ displayNumber(numbers, 1, 'tBody', scales.values);
 displayNumber(numbers, 2, 'tBody', scales.valSquare);
 displayNumber(numbers, 3, 'tBody', scales.valLog);
 displayNumber(numbers, 4, 'tBody', scales.valLog);
+
+
+var newNumbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+var width = d3.scaleQuantize().range([70 ,150]).domain([9, 10]);
+var fontSize = d3.scaleLinear().range([12, 120]).domain([0, 10]);
+var height = d3.scaleLinear().range([30, 180]).domain([0, 10]);
+var numberCards = d3.selectAll('.numberCards').append('div').style('width', 1200).style('height', 200);
+
+numberCards.selectAll('div').data(newNumbers)
+    .enter()
+    .append('div')
+    .style('width',width)
+    .attr('class','numberCard')
+    .text(function (d) {
+        return d
+    })
+    .style('font', function (d) {
+        return "italic bold " + fontSize(d) + "px/" + height(d) + "px Georgia, serif";
+    });
