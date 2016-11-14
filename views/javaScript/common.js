@@ -19,7 +19,6 @@ var svg = d3.select('.chart').append('svg')
     .attr('height', HEIGHT)
     .classed('svg', true);
 
-console.log("FOOOOOOOOO", WIDTH - (MARGIN.LEFT + MARGIN.RIGHT));
 
 var mainGroup = svg.append('g')
     .attr('transform', 'translate(' + MARGIN.LEFT + ',' + MARGIN.TOP + ')')
