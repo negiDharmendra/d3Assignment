@@ -1,28 +1,31 @@
 const HEIGHT = 100;
 const WIDTH = 100;
 const MARGIN = 50;
+const STARTING_POINT = 0;
+
+var shapes = [createLine, createCircle, createSquare, createTriangle];
 
 
 function setupSvg() {
     d3.select('.svgShapes').append('svg')
         .attr('width', 560)
         .attr('height', 120)
-        .attr()
+        .attr();
 }
 
 
-function appendGroup(translate) {
-    return d3.select('svg').append('g').attr('transform', translate);
+function appendGroup(translateBy) {
+    return d3.select('svg').append('g').attr('transform', translateBy);
 }
 
 function createLine(group) {
     group.append('line')
-        .attr('x1', 0)
+        .attr('x1', STARTING_POINT)
         .attr('y1', HEIGHT)
         .attr('x2', WIDTH)
-        .attr('y2', 0)
+        .attr('y2', STARTING_POINT)
         .attr('fill', 'none')
-        .attr('stroke', 'gray')
+        .attr('stroke', 'gray');
 }
 
 function createCircle(group) {
@@ -33,22 +36,26 @@ function createCircle(group) {
 }
 
 function createSquare(group) {
+    var borderRadius = 5;
     group.append('rect')
         .attr('width', WIDTH)
         .attr('height', HEIGHT)
         .attr('class', 'square')
-        .attr('rx',5)
-        .attr('ry',5);
+        .attr('rx', borderRadius)
+        .attr('ry', borderRadius);
 }
 
 
-function translateBy(count) {
-    return 'translate(' + (WIDTH * count + MARGIN * count) + ',10)'
+function createTriangle(group) {
+    var points = '0,100 50,0 100,100';
+    group.append('polygon')
+        .attr('points', points)
+        .attr('class', 'triangle');
 }
+
+var translatorScale = d3.scaleLinear().range(['translate(0,10)', 'translate(450,10)']).domain([0, shapes.length - 1]);
+
 setupSvg();
-
-var shapes = [createLine, createCircle, createSquare];
 shapes.forEach(function (shape, index) {
-    shape(appendGroup(translateBy(index)));
+    shape(appendGroup(translatorScale(index)));
 });
-

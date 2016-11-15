@@ -1,5 +1,5 @@
 
-.line, .square, .triangle, circle {
+.line, .square, .triangle, circle ,line{
     fill: none;
     stroke-width:2px;
 }
