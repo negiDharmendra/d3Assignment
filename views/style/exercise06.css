@@ -1,0 +1,22 @@
+
+.line, .square, .triangle, circle {
+    fill: none;
+    stroke-width:2px;
+}
+
+.line {
+    stroke: gray;
+}
+
+.square {
+    stroke: steelblue;
+    border-radius: 10px;
+}
+
+.triangle {
+    stroke: green;
+}
+
+circle {
+    stroke: red;
+}
