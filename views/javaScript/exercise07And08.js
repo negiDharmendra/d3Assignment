@@ -42,7 +42,7 @@ var lineWithSineValue = d3.line().x(function (cord) {
 
 
 function d3TickFormat(tick) {
-    return (tick / 10.0);
+    return (tick / 10.0).toFixed(1);
 }
 
 var xAxis = d3.axisBottom(cordXScale).ticks(10).tickFormat(d3TickFormat);
