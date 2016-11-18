@@ -1,0 +1,19 @@
+
+.domain, .tick line {
+    stroke-width: 1px;
+    stroke: gray;
+}
+
+.tick text{
+    fill: gray;
+}
+
+circle{
+    fill:white;
+    stroke: steelblue;
+}
+
+.area{
+    fill:rgba(70, 130, 180, 0.18);
+    stroke: steelblue;
+}
