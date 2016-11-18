@@ -44,17 +44,32 @@ function generateChartForExercise14() {
 }
 
 function generateChartForExercise15() {
-    var startAngleInRadian = 0;
-    var endAngleInRadian = 180 * (Math.PI / 180);
     pie
-        .startAngle(startAngleInRadian)
-        .endAngle(endAngleInRadian);
+        .startAngle(degreeToRadian(0))
+        .endAngle(degreeToRadian(180));
     var svg = setUpSvg();
     generatePieChart(svg, data)
 }
 
 function generateChartForExercise16() {
-    arc.innerRadius(INNER_WIDTH/2);
+    var INNER_RADIUS = INNER_WIDTH / 2;
+    arc.innerRadius(INNER_RADIUS);
+    var svg = setUpSvg();
+    generatePieChart(svg, data)
+}
+
+
+function degreeToRadian(inDegree) {
+    return inDegree * (Math.PI / 180);
+}
+
+function generateChartForExercise17() {
+
+    var INNER_RADIUS = INNER_WIDTH / 2;
+    arc.innerRadius(INNER_RADIUS);
+    pie
+        .startAngle(degreeToRadian(0))
+        .endAngle(degreeToRadian(180));
     var svg = setUpSvg();
     generatePieChart(svg, data)
 }
