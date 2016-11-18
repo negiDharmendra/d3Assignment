@@ -4,22 +4,32 @@
     stroke: gray;
 }
 
-.tick text{
+.tick text {
     fill: gray;
 }
 
-circle{
-    fill:white;
+circle {
+    fill: white;
     stroke: steelblue;
 }
 
-.area{
-    fill:rgba(70, 130, 180, 0.18);
+.area {
+    fill: rgba(70, 130, 180, 0.18);
     stroke-width: 1px;
 }
 
-.line{
-    fill:none;
+.line {
+    fill: none;
     stroke: steelblue;
     stroke-width: 1px;
+}
+
+.areaLine {
+    fill: rgba(70, 130, 180, 0.18);;
+    stroke-width: 1px;
+}
+
+.curveTitle {
+    font-size: 20px;
+    font-weight: 600;
 }

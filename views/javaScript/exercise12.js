@@ -1,6 +1,6 @@
 const WIDTH = 800;
 const HEIGHT = 650;
-const MARGIN = 30;
+const MARGIN = 100;
 
 const INNER_WIDTH = WIDTH - (MARGIN * 2);
 const INNER_HEIGHT = HEIGHT - (MARGIN * 2);
@@ -11,11 +11,12 @@ var cordXScale = d3.scaleLinear().range([0, INNER_WIDTH]).domain([0, 10]);
 var cordYScale = d3.scaleLinear().range([INNER_HEIGHT, 0]).domain([0, 10]);
 
 function setupSvg() {
-    d3.select('.lineChart').append('svg')
+    var svg = d3.select('.lineChart').append('svg')
         .attr('width', WIDTH)
         .attr('height', HEIGHT)
         .append('g')
         .attr('transform', 'translate(' + MARGIN + ',' + MARGIN + ')');
+    return svg;
 }
 
 var area = d3.area()
@@ -42,22 +43,27 @@ function d3TickFormat(tick) {
 var xAxis = d3.axisBottom(cordXScale).ticks(10).tickFormat(d3TickFormat);
 var yAxis = d3.axisLeft(cordYScale).ticks(10).tickFormat(d3TickFormat);
 
-function drawAxis() {
-    var xAxisG = d3.select('svg g').append('g').attr('transform', 'translate(0,' + INNER_HEIGHT + ')');
+function drawAxis(svg) {
+    var xAxisG = svg.append('g').attr('transform', 'translate(0,' + INNER_HEIGHT + ')');
     xAxisG.call(xAxis);
-    var yAxisG = d3.select('svg g').append('g').attr('transform', 'translate(0,0)');
+    var yAxisG = svg.append('g').attr('transform', 'translate(0,0)');
     yAxisG.call(yAxis);
 }
 
-function drawAreaChart(chartGenerator, className) {
-    var g = d3.select('svg g').append('g');
+function drawAreaChart(svg, chartGenerator, className, curve) {
+    chartGenerator.curve(curve.d3Curve);
+    var g = svg.append('g');
     g.append('path')
         .attr('d', chartGenerator(coordinates))
         .attr('class', className);
+    var title = svg.append('g').attr('transform', 'translate(200)');
+    title.append('text')
+        .text(curve.curveTitle)
+        .attr('class', 'curveTitle')
 }
 
-function drawCircle() {
-    var g = d3.select('svg > g').append('g');
+function drawCircle(svg) {
+    var g = svg.append('g');
     g.selectAll('circle').data(coordinates).enter().append('circle')
         .attr('cx', function (d) {
             return cordXScale(d)
@@ -67,8 +73,44 @@ function drawCircle() {
         }).attr('r', 5);
 }
 
-setupSvg();
-drawAxis();
-drawAreaChart(area, 'area');
-drawAreaChart(line, 'line');
-drawCircle();
+function drawExercise12Charts() {
+    var svg = setupSvg();
+    drawAxis(svg);
+    drawAreaChart(svg, area, 'area');
+    drawAreaChart(svg, line, 'line');
+    drawCircle(svg);
+}
+
+const curveArray = [
+    {
+        d3Curve: d3.curveLinearClosed,
+        curveTitle: 'Curve Linear Closed'
+    },
+    {
+        d3Curve: d3.curveStepAfter,
+        curveTitle: 'Curve Step After'
+    },
+    {
+        d3Curve: d3.curveBasisOpen,
+        curveTitle: 'Curve Basis Open'
+    },
+    {
+        d3Curve: d3.curveCardinalClosed,
+        curveTitle: 'Curve Cardinal Closed'
+    },
+    {
+        d3Curve: d3.curveBundle.beta(1),
+        curveTitle: 'Curve Bundle#beta(1)'
+    }
+];
+
+
+function drawExercise13Charts() {
+    curveArray.forEach(function (curve) {
+        var svg = setupSvg();
+        drawAxis(svg);
+        drawAreaChart(svg, area, 'area', curve);
+        drawAreaChart(svg, line, 'line', curve);
+        drawCircle(svg);
+    });
+}
