@@ -17,6 +17,19 @@ var coordinates = [
     {"x": 9, "y": 2}
 ];
 
+var coordinatesForSine = [
+    {"x": 0},
+    {"x": 1},
+    {"x": 2},
+    {"x": 3},
+    {"x": 4},
+    {"x": 5},
+    {"x": 6},
+    {"x": 7},
+    {"x": 8},
+    {"x": 9}
+];
+
 var cordXScale = d3.scaleLinear().range([0, INNER_WIDTH]).domain([0, 10]);
 var cordYScale = d3.scaleLinear().range([INNER_HEIGHT, 0]).domain([0, 10]);
 
@@ -56,7 +69,7 @@ function drawAxis(svg) {
     yAxisG.call(yAxis);
 }
 
-function drawLineChart(curve, svg, line, color) {
+function drawLineChart(curve, svg, line, color, coordinates) {
     line.curve(curve.d3Curve);
     var g = svg.append('g');
     var title = svg.append('g').attr('transform', 'translate(300)');
@@ -66,10 +79,10 @@ function drawLineChart(curve, svg, line, color) {
         .attr('stroke', color);
     title.append('text')
         .text(curve.curveTitle)
-        .attr('class','curveTitle')
+        .attr('class', 'curveTitle')
 }
 
-function drawCircle(svg, strokeColor, isSineValue) {
+function drawCircle(coordinates, svg, strokeColor, isSineValue) {
     var g = svg.append('g');
     g.selectAll('circle').data(coordinates).enter().append('circle')
         .attr('cx', function (d) {
@@ -122,8 +135,8 @@ curveArray.forEach(function (curve) {
 
     var svg = setupSvg();
     drawAxis(svg);
-    drawLineChart(curve, svg, line, 'maroon');
-    drawLineChart(curve, svg, lineWithSineValue, 'darkblue');
-    drawCircle(svg, 'maroon');
-    drawCircle(svg, 'darkblue', true);
+    drawLineChart(curve, svg, line, 'maroon', coordinates);
+    drawLineChart(curve, svg, lineWithSineValue, 'darkblue', coordinatesForSine);
+    drawCircle(coordinates, svg, 'maroon');
+    drawCircle(coordinatesForSine, svg, 'darkblue', true);
 });

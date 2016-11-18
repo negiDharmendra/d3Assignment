@@ -27,6 +27,13 @@ var area = d3.area()
         return cordYScale(3 * Math.sin(cord) + 5);
     });
 
+var line = d3.line()
+    .x(function (cord) {
+        return cordXScale(cord);
+    })
+    .y(function (cord) {
+        return cordYScale(3 * Math.sin(cord) + 5);
+    });
 
 function d3TickFormat(tick) {
     return (tick / 10.0).toFixed(1);
@@ -42,11 +49,11 @@ function drawAxis() {
     yAxisG.call(yAxis);
 }
 
-function drawAreaChart(line) {
+function drawAreaChart(chartGenerator, className) {
     var g = d3.select('svg g').append('g');
     g.append('path')
-        .attr('d', line(coordinates))
-        .attr('class', 'area');
+        .attr('d', chartGenerator(coordinates))
+        .attr('class', className);
 }
 
 function drawCircle() {
@@ -62,5 +69,6 @@ function drawCircle() {
 
 setupSvg();
 drawAxis();
-drawAreaChart(area);
+drawAreaChart(area, 'area');
+drawAreaChart(line, 'line');
 drawCircle();

@@ -15,5 +15,11 @@ circle{
 
 .area{
     fill:rgba(70, 130, 180, 0.18);
+    stroke-width: 1px;
+}
+
+.line{
+    fill:none;
     stroke: steelblue;
+    stroke-width: 1px;
 }
