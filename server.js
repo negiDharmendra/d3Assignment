@@ -6,7 +6,7 @@ var app = express();
 
 app.set('view engine', 'jade');
 
-app.use(express.static('./views'));
+app.use(express.static('./public'));
 
 
 app.get(/exercise\w*/, function (req, res) {
