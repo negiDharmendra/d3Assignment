@@ -51,11 +51,19 @@ function drawAxis(svg) {
 }
 
 function drawAreaChart(svg, chartGenerator, className, curve) {
-    chartGenerator.curve(curve.d3Curve);
+    if (curve) {
+        addTitle(svg, curve);
+        chartGenerator.curve(curve.d3Curve);
+    }
     var g = svg.append('g');
     g.append('path')
         .attr('d', chartGenerator(coordinates))
         .attr('class', className);
+
+
+}
+
+function addTitle(svg, curve) {
     var title = svg.append('g').attr('transform', 'translate(200)');
     title.append('text')
         .text(curve.curveTitle)
