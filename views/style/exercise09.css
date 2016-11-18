@@ -1,0 +1,22 @@
+
+.domain, .tick line {
+    stroke-width: 2px;
+}
+
+.tick text{
+    fill: gray;
+}
+
+circle{
+    fill:white;
+}
+
+.line{
+    fill:none;
+    stroke-width: 2px;
+}
+
+.curveTitle{
+    font-size: 20px;
+    font-weight: 600;
+}
