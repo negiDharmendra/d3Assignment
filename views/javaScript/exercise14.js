@@ -52,3 +52,9 @@ function generateChartForExercise15() {
     var svg = setUpSvg();
     generatePieChart(svg, data)
 }
+
+function generateChartForExercise16() {
+    arc.innerRadius(INNER_WIDTH/2);
+    var svg = setUpSvg();
+    generatePieChart(svg, data)
+}
