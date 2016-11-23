@@ -1,0 +1,32 @@
+.define-number, .define-number div {
+    display: inline-block;
+}
+.define-number div, .define-number span{
+    margin:0 20px 0 0;
+}
+
+.d3ArraysStatisticalMethods {
+    margin-top: 30px;
+}
+
+.method-name {
+    font-weight: 600;
+}
+
+.bars text {
+    fill: black;
+    font-weight: 600;
+    text-align: center;
+}
+
+.all-method {
+    margin-top: 20px;
+    display: inline-block;
+}
+
+.check-box {
+    margin: 20px 10px 0 10px;
+    padding: 5px 5px 5px 5px;
+    display: inline;
+    border-radius: 10px;
+}
