@@ -37,3 +37,30 @@
 .sub-graph .tick line{
     stroke: rgba(255,0,0,.2);
 }
+
+
+div.ui-dialog{
+    background: white;
+    border-radius: 20px;
+    box-shadow: 1px 1px 1px 1px #888888;
+}
+
+.ui-dialog-titlebar{
+    margin:12% 0 0 15%;
+    padding-top: 20px;
+    font-size: 18px;
+}
+
+#dialog{
+    margin:10% 0 0 15%;
+}
+.ui-button{
+    margin-left:30px;
+}
+#dialog-form button{
+    margin-left:10px;
+}
+
+#dialog-form{
+    margin-top: 20px;
+}

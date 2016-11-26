@@ -5,6 +5,7 @@ html
         link(href="./style/exercise18.css", rel='stylesheet')
         script(src="./javaScript/d3.v4.js")
         script(src="./javaScript/jquery-2.1.4.min.js")
+        script(src="./javaScript/jquery-ui.min.js")
     body
         div.mainContent
             h1 Exercise 18
@@ -12,12 +13,10 @@ html
                 div.numbers-input
                     span.label Provide numbers (space is delimiter) :
                     input(type='text', name='numbers')
-                div.quantile-input
-                    span.label Quantile (0 to 1) :
-                    input(type='text', name='numbers', value='0.5')
                 div.display
                     button(onclick='setData()') Set data to demonstrate D3 Array's statistical method
             div.all-method
+            div(id='dialog',style='display:none')
             div.d3ArraysStatisticalMethods
         script(src="./javaScript/exercise18.js")
 
