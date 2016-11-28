@@ -57,7 +57,7 @@ function setUpSvg() {
 
 function defineDomain(numbers) {
     xScale.domain(numbers);
-    yScale.domain([0, d3.max(numbers,function (d) {
+    yScale.domain([0, d3.max(numbers, function (d) {
         return d;
     })]);
 }
@@ -73,15 +73,15 @@ function createAxis() {
     xAxisG.selectAll('text').remove();
 }
 
-function d3UsageArraysStatisticalMethods(data, text) {
+function d3UsageArraysStatisticalMethods(data) {
 
-    var group = d3.select('.main-group');
+    var collection = d3.select('.main-group').selectAll('rect').data(data);
 
-    group.selectAll('rect').data(data).enter()
+    collection
+        .enter()
         .append('rect')
         .attr('class', 'bar')
         .attr('width', 30)
-    group.selectAll('rect')
         .attr('height', function (d) {
             return INNER_HEIGHT - yScale(d);
         })
@@ -89,7 +89,7 @@ function d3UsageArraysStatisticalMethods(data, text) {
         .attr('y', yScale)
         .attr('fill', 'steelblue');
 
-    group.selectAll('rect').exit().remove();
+    collection.exit().remove();
 }
 
 
