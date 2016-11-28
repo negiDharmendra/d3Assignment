@@ -1,5 +1,5 @@
 const WIDTH = 1200;
-const HEIGHT = 600;
+const HEIGHT = 500;
 const MARGIN = 30;
 
 const INNER_WIDTH = WIDTH - (MARGIN * 4);
@@ -15,7 +15,7 @@ var colors = d3.scaleOrdinal(d3.schemeCategory20);
 
 function createCheckBox() {
     var allMethod = ['Min', 'Max', 'Extent', 'Sum', 'Mean', 'Median', 'Quantile', 'Variance', 'Deviation', 'Scan', 'Bisect', 'Bisector', 'Ascending', 'Descending'];
-
+    $('.all-method').css('width',WIDTH);
     allMethod.forEach(function (element) {
         var color = colors(element);
         var div = document.createElement('div');
@@ -63,19 +63,30 @@ function defineDomain(numbers) {
 }
 
 function createAxis() {
-    var xAxisG = d3.select('.main-group').append('g').attr('class', 'axis').attr('transform', 'translate(0,' + INNER_HEIGHT + ')');
-    var yAxisG = d3.select('.main-group').append('g').attr('class', 'axis');
+    var xAxisG = d3.select('.main-group').append('g').attr('class', 'x-axis').attr('transform', 'translate(0,' + INNER_HEIGHT + ')');
+    var yAxisG = d3.select('.main-group').append('g').attr('class', 'y-axis');
     var xAxis = d3.axisBottom(xScale);
     var yAxis = d3.axisLeft(yScale).ticks(20).tickSizeInner(-INNER_WIDTH);
 
-    xAxisG.call(xAxis);
+    xAxisG.call(xAxis).selectAll('text').remove();
     yAxisG.call(yAxis);
-    xAxisG.selectAll('text').remove();
+}
+
+function updateAxis() {
+    var xAxis = d3.axisBottom(xScale);
+    var yAxis = d3.axisLeft(yScale).ticks(20).tickSizeInner(-INNER_WIDTH);
+    d3.selectAll('.x-axis').call(xAxis).selectAll('text').remove();
+    d3.selectAll('.y-axis').call(yAxis);
 }
 
 function d3UsageArraysStatisticalMethods(data) {
 
-    var collection = d3.select('.main-group').selectAll('rect').data(data);
+    var collection = d3.select('.main-group').selectAll('rect').data(data)
+        .attr('height', function (d) {
+            return INNER_HEIGHT - yScale(d);
+        })
+        .attr('x', xScale)
+        .attr('y', yScale);
 
     collection
         .enter()
@@ -87,7 +98,7 @@ function d3UsageArraysStatisticalMethods(data) {
         })
         .attr('x', xScale)
         .attr('y', yScale)
-        .attr('fill', 'steelblue');
+        .attr('fill', 'steelblue')
 
     collection.exit().remove();
 }
@@ -203,6 +214,19 @@ function drawMarker(values, elementDetail) {
     })
 }
 
+function displayPopupFor(elements, title) {
+    removePopup();
+    elements.forEach(function (element) {
+        var newElement = d3.select('#dialog').append(element.el);
+        for (var attr in element.attrs)
+            newElement.attr(attr, element.attrs[attr]);
+        newElement.text(element.attrs.text)
+    });
+    $('#dialog').attr('title', title || '')
+        .dialog();
+}
+
+
 function d3Variance(numbers, elementDetail) {
     var variance = d3.variance(numbers, function (d) {
         return d
@@ -272,30 +296,26 @@ function d3Median(numbers, elementDetail) {
 }
 
 function removePopup() {
-    $('#dialog input').remove();
-    $('#dialog span').remove();
+    d3.select("#dialog").selectAll("*").remove();
     $('.ui-dialog').remove();
 }
 
 function quantile(numbers, elementDetail) {
-    function displayPopupToAskForQuantile() {
-        var input = "<input id='quantile-input' type='text'/>";
-        var submit = "<input type='button' id='quantile-input-button' value='Submit' />";
-        $('#dialog').append(input + '\n' + submit);
 
-        $('#dialog').attr('title', 'Enter form 0 to 1')
-            .dialog();
-    }
+    var elements = [
+        {el: 'input', attrs: {id: 'quantile-input', type: 'text'}},
+        {el: 'input', attrs: {id: 'quantile-submit-button', type: 'button', value: 'Submit'}}
+    ];
 
     var p = 0.5;
     if (elementDetail.isChecked)
-        displayPopupToAskForQuantile();
+        displayPopupFor(elements, 'Enter form 0 to 1');
     else {
         removePopup();
         d3.select('g .' + elementDetail.id).remove();
     }
 
-    $('#quantile-input-button').click(function () {
+    $('#quantile-submit-button').click(function () {
         p = $('#quantile-input').val();
         var pQuantile = d3.quantile(numbers, p);
         drawMarker([pQuantile], elementDetail);
@@ -312,39 +332,112 @@ function d3Deviation(numbers, elementDetail) {
 }
 
 function d3Scan(numbers, elementDetail) {
-    function displayPopupToAskForQuantile() {
-        var ascending = "<input class='scan-radio-input' name='scan-option' type='radio' value='ascending'/><span>Ascending</span>";
-        var descending = "<input class='scan-radio-input' name='scan-option' type='radio' value='descending'/><span>Descending</span>";
-        var submit = "<input type='button' id='scan-radio-submit' value='Submit' />";
-        $('#dialog').append(ascending + '\n' + descending + '\n', submit);
-
-        $('#dialog').attr('title', 'Select a scanner method')
-            .dialog();
-    }
-
-    var scanner = {
-        ascending: function (a, b) {
-            return a - b
-        }, descending: function (a, b) {
-            return b - a
-        }
-    };
+    var elements = [
+        {el: 'input', attrs: {class: 'scan-radio-input', type: 'radio', name: 'scan-option', value: 'ascending'}},
+        {el: 'span', attrs: {text: 'Ascending'}},
+        {el: 'input', attrs: {class: 'scan-radio-input', type: 'radio', name: 'scan-option', value: 'descending'}},
+        {el: 'span', attrs: {text: 'Descending'}},
+        {el: 'input', attrs: {id: 'scan-radio-submit', type: 'button', value: 'Submit'}}
+    ];
 
     if (elementDetail.isChecked)
-        displayPopupToAskForQuantile();
+        displayPopupFor(elements, 'Select a scanner method');
     else {
         removePopup();
         d3.selectAll('.bar').attr('fill', 'steelblue');
     }
 
     $('#scan-radio-submit').click(function () {
-        var selectedScanner = scanner[$('input[name=scan-option]:checked').val()];
+        var selectedScanner = d3[$('input[name=scan-option]:checked').val()];
         var index = d3.scan(numbers, selectedScanner);
         d3.selectAll('.bar').filter(function (d, i) {
             return i == index
         }).attr('fill', elementDetail.color)
         removePopup();
     });
+
+}
+
+
+function d3Bisect(numbers, elementDetail) {
+    var elements = [
+        {el: 'input', attrs: {id: 'bisect-input', type: 'text'}},
+        {el: 'input', attrs: {id: 'bisect-submit-button', type: 'button', value: 'Submit'}}
+    ];
+
+    if (elementDetail.isChecked)
+        displayPopupFor(elements, 'Enter a number');
+    else {
+        removePopup();
+        d3.select('g .' + elementDetail.id).remove();
+    }
+
+    $('#bisect-submit-button').click(function () {
+        var number = $('#bisect-input').val();
+        var insertionPoint = d3.bisect(numbers, number);
+        removePopup();
+        var text = '<text>Insertion index for ' + number + ' is ' + insertionPoint + '</text>';
+        $('#dialog').attr('title', '').append(text)
+            .dialog();
+    });
+}
+
+
+function d3Bisector(numbers, elementDetail) {
+    var elements = [
+        {el: 'input', attrs: {class: 'bisector-radio-input', type: 'radio', name: 'bisector-option', value: 'left'}},
+        {el: 'span', attrs: {text: 'Left'}},
+        {el: 'input', attrs: {class: 'bisector-radio-input', type: 'radio', name: 'bisector-option', value: 'right'}},
+        {el: 'span', attrs: {text: 'Right'}},
+        {el: 'br', attrs: {}},
+        {el: 'input', attrs: {class: 'bisector-radio-input', type: 'text', name: 'bisect'}},
+        {el: 'input', attrs: {id: 'bisector-radio-submit', type: 'button', value: 'Submit'}}
+    ];
+
+    if (elementDetail.isChecked)
+        displayPopupFor(elements, 'Select a bisector');
+    else {
+        removePopup();
+        d3.selectAll('.bar').attr('fill', 'steelblue');
+    }
+
+    $('#bisector-radio-submit').click(function () {
+        var bisector = $('input[name=bisector-option]:checked').val();
+        var number = $('input[name=bisect]').val();
+        var bisectorFunc = d3.bisector(function (d) {
+            return d
+        })[bisector];
+        var insertionPoint = bisectorFunc(numbers, number);
+        removePopup();
+        var text = '<text>Insertion index for ' + number + ' is ' + insertionPoint + '</text>';
+        $('#dialog').attr('title', '').append(text)
+            .dialog();
+    });
+}
+
+function d3Descending(numbers, elementDetail) {
+    var newNumbers = JSON.parse(JSON.stringify(numbers));
+    var sortedNumber = newNumbers.sort(function (firstValue, secondValue) {
+        return d3.descending(firstValue, secondValue);
+    });
+    if (!elementDetail.isChecked)
+        sortedNumber = numbers;
+    defineDomain(sortedNumber);
+    updateAxis(sortedNumber);
+    d3UsageArraysStatisticalMethods(sortedNumber)
+
+}
+
+function d3Ascending(numbers, elementDetail) {
+    var newNumbers = JSON.parse(JSON.stringify(numbers));
+    var sortedNumber = newNumbers.sort(function (firstValue, secondValue) {
+        return d3.ascending(firstValue, secondValue);
+    });
+    if (!elementDetail.isChecked)
+        sortedNumber = numbers;
+    defineDomain(sortedNumber);
+    updateAxis(sortedNumber);
+    d3UsageArraysStatisticalMethods(sortedNumber);
 
 }
 
@@ -358,7 +451,11 @@ var allMethods = {
     quantile: quantile,
     variance: d3Variance,
     deviation: d3Deviation,
-    scan: d3Scan
+    scan: d3Scan,
+    bisect: d3Bisect,
+    bisector: d3Bisector,
+    ascending: d3Ascending,
+    descending: d3Descending
 };
 
 //======================================================================================================================
@@ -381,7 +478,7 @@ function invokeD3StaticalMethod(element) {
     elementDetails.isChecked = $(element).is(':checked');
     elementDetails.color = d3.select(element).attr('name');
     elementDetails.id = d3.select(element).attr('id');
-    allMethods[element.id.toLowerCase()](numbers, elementDetails);
+    allMethods[element.id](numbers, elementDetails);
 
 }
 createCheckBox();
@@ -393,6 +490,6 @@ function setData() {
     resetCheckBox();
     numbers = getInputNumbers();
     defineDomain(numbers);
-    createAxis();
+    updateAxis(numbers);
     d3UsageArraysStatisticalMethods(numbers)
 }

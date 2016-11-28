@@ -23,15 +23,20 @@
     stroke: rgba(211, 211, 211, 0.24);
 }
 .all-method {
-    margin-top: 20px;
+    margin-top: 10px;
     display: inline-block;
 }
 
 .check-box {
-    margin: 20px 10px 0 10px;
+    width:100px;
+    margin: 0 10px 5px 0;
     padding: 5px 5px 5px 5px;
-    display: inline;
+    display: inline-block;
     border-radius: 10px;
+}
+
+.check-box:hover{
+    opacity: .6;
 }
 
 .sub-graph .tick line{
